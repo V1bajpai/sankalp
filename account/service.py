@@ -9,6 +9,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
 from account.models import UserDetail, SignupValidationToken
+from rest_framework.views import APIView
 
 
 def register(request):
@@ -91,62 +92,18 @@ def login(request, format=None):
                     'token': Token.objects.get_or_create(user=user)[0].key,
                     'name': user_detail.name,
                     'email': user_detail.email,
-                    # 'user_type': user_detail.user_type,
-                    # 'image_url': image_url,
-                    # 'is_verified': user_detail.is_verified,
-                    # 'role': user_detail.role,
-                    # 'logo': logo,
-                    # 'language':language
                     }
-                # user.last_login = timezone.now()
                 user.save()
-                # user.save(update_fields=['last_login'])
-                # if 'device_token' in request.data and len(request.data['device_token']):
-                #     device_token = request.data["device_token"]
-                #     device_category = request.data["device_category"]
-                #     device_type = request.data["device_type"]
-                #     device_model = request.data["device_model"]
-                #     request.user = user
-                #     UserService.save_device_token_by_device_category(request,device_token,device_category,device_type,device_model)
+
             else:
                 return Response({"message": _("Email or password is incorrect.")}, status= status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({"message": _("Sorry B, we could not find a user associated with this email, Please Sign up to continue.")}, status= status.HTTP_400_BAD_REQUEST)
+            return Response({"message": _("Sorry, we could not find a user associated with this email, Please Sign up to continue.")}, status= status.HTTP_400_BAD_REQUEST)
         return Response({'content':content, 'msg':'Login Success'}, status=status.HTTP_200_OK)
     except Exception as e:
         traceback.print_exc()
-        # x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        # if x_forwarded_for:
-        #     ip = x_forwarded_for.split(',')[0]
-        # else:
-        #     ip = request.META.get('REMOTE_ADDR')
-        # user_agent = get_user_agent(request)
-        # device_type = '-'
-        # if user_agent.is_mobile:
-        #     device_type = MOBILE
-        # if user_agent.is_pc:
-        #     device_type = PC
-        # if user_agent.is_bot:
-        #     device_type = BOT
-        # if user_agent.is_tablet:
-        #    device_type = TABLET
-        # timestamp = datetime.now()
-        # user_agent_string = parse_ua_string(request)
-        # context1 = {
-        #     'name': user.fullname.capitalize(),
-        #     'email': user.email,
-        #     # 'ip': ip,
-        #     # 'is_touch_capable':user_agent.is_touch_capable,
-        #     # 'browser_family':user_agent.browser.family,
-        #     # 'browser_version':user_agent.browser.version_string,
-        #     # 'os_family':user_agent.os.family,
-        #     # 'os_version':user_agent.os.version_string,
-        #     # 'device_family':user_agent.device.family,
-        #     # 'device_type':device_type,
-        #     'body':str(request.data),
-        #     # 'meta':user_agent_string,
-        #     # 'timestamp':str(timestamp),
-        # }
-        # EmailService.email_notification(NOTIFICATION_TYPE_TRIGGER,NOTIFICATION_SUB_TYPE_LOGIN_ERROR_SUPPORT, settings.SUPPORT_MAIL, None,context1, None)
         return Response({"message": _("We encountered an error. Please try after sometime.")},
                         status=status.HTTP_400_BAD_REQUEST)
+
+
+

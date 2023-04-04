@@ -1,8 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-# from .views import PasswordResetView
 from account import views
-# from account.service import PasswordResetView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [

@@ -7,6 +7,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from fastapi_admin.i18n import _
 
+# from content.serializers import TextContentSerializer
+
+
 def get_all_videos(request):
     try:
         video_content = VideoContent.objects.all().values()
@@ -20,6 +23,12 @@ def get_all_news(request):
     try:
         news_content = TextContent.objects.all().values()
         return Response({'content': news_content}, status=status.HTTP_200_OK)
+
+        # news_content = TextContent.objects.all()
+        # serializer_class = TextContentSerializer
+        # # serializer_class = TextContentSerializer(news_content)
+        # return Response({'content': news_content}, status=status.HTTP_200_OK)
+
     except Exception as e:
         traceback.print_exc()
         return Response({"message": _("We encountered an error. Please try after sometime.")},

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 class VideoContent(models.Model):
@@ -10,16 +11,17 @@ class VideoContent(models.Model):
     def __str__(self):
         return self.video_description
 
+
 class TextContent(models.Model):
     category_choices = (
-        ('Home','Home'),
-        ('Latest','Latest'),
-        ('Sports','Sports'),
-        ('Election','Election'),
-        ('Entertainment','Entertainment'),
-        ('Technology','Technology'),
-        ('Business','Business'),
-        ('Education','Education'),
+        ('Home', 'Home'),
+        ('Latest', 'Latest'),
+        ('Sports', 'Sports'),
+        ('Election', 'Election'),
+        ('Entertainment', 'Entertainment'),
+        ('Technology', 'Technology'),
+        ('Business', 'Business'),
+        ('Education', 'Education'),
     )
     category = models.CharField(max_length=20, choices=category_choices, null=True, blank=True)
     title = models.TextField(blank=False)
@@ -29,3 +31,5 @@ class TextContent(models.Model):
 
     def __str__(self):
         return self.title
+
+
